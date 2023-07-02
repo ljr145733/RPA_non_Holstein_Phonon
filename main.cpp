@@ -47,7 +47,7 @@ cplx g(const ind &k, const ind &q)
     //return 7.0 *(sin(k.k1 / 2) * sin(k.k1 / 2 - q.k1 / 2) * cos(q.k2 / 2.0) - sin(k.k2 / 2.0) * sin(k.k2 / 2.0 - q.k2 / 2.0) * cos(q.k1 / 2.0));
     //return 3.0 *(sin(k.k1 / 2) * sin(k.k1 / 2 - q.k1 / 2) * cos(q.k2 / 2.0) + sin(k.k2 / 2.0) * sin(k.k2 / 2.0 - q.k2 / 2.0) * cos(q.k1 / 2.0));
      
-     return 3.0*(cos(k.k1)-cos(k.k2))*(cos(k.k1/2-q.k1/2)-cos(k.k2/2-q.k2/2));
+     return 2.5*(cos(k.k1/2.0)-cos(k.k2/2.0))*(cos(k.k1/2-q.k1/2)-cos(k.k2/2-q.k2/2));
 }
 
 cplx lambda(const ind &p, const ind &k, const ind &q)
