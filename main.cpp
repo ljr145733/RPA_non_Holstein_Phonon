@@ -42,10 +42,11 @@ cplx g(const ind &k, const ind &q)
     return g0+g1*2*(cos(q.k1)+cos(q.k2))+g2*4*cos(q.k1)*cos(q.k2) +g3*2*(cos(2*q.k1)+cos(2*q.k2))+4*g4*cos(2*q.k1)*cos(2*q.k2);
     */
 
-     //return 1*sqrt(pow(sin(q.k1/2.0),2) + pow(sin(q.k2/2.0),2)); //breathing phonon
-    //return 8.0 * exp(-cplx(0, (q.k1 + q.k2) / 2.0)) * 1.0 / sqrt(sqrt(pow(cos(q.k1 / 2), 2) + pow(cos(q.k2 / 2), 2))) * (sin(k.k1 / 2) * sin(k.k1 / 2 - q.k1 / 2) * cos(q.k2 / 2.0) - sin(k.k2 / 2.0) * sin(k.k2 / 2.0 - q.k2 / 2.0) * cos(q.k1 / 2.0));
-    // return 4.0*exp(-cplx(0,(q.k1+q.k2)/2.0))*1.0/sqrt(sqrt(pow(cos(q.k1/2),2)+pow(cos(q.k2/2),2)))*(sin(k.k1/2)*sin(k.k1/2-q.k1/2)*cos(q.k2/2.0)+sin(k.k2/2.0)*sin(k.k2/2.0-q.k2/2.0)*cos(q.k1/2.0));
-     return 3*(cos(k.k1)-cos(k.k2))*(cos(k.k1/2-q.k1/2)-cos(k.k2/2-q.k2/2));
+    //return sqrt(pow(sin(q.k1/2.0),2) + pow(sin(q.k2/2.0),2)); //breathing phonon
+    //return 7.0 *(sin(k.k1 / 2) * sin(k.k1 / 2 - q.k1 / 2) * cos(q.k2 / 2.0) - sin(k.k2 / 2.0) * sin(k.k2 / 2.0 - q.k2 / 2.0) * cos(q.k1 / 2.0));
+    //return 3.0 *(sin(k.k1 / 2) * sin(k.k1 / 2 - q.k1 / 2) * cos(q.k2 / 2.0) + sin(k.k2 / 2.0) * sin(k.k2 / 2.0 - q.k2 / 2.0) * cos(q.k1 / 2.0));
+     
+     return 3.0*(cos(k.k1)-cos(k.k2))*(cos(k.k1/2-q.k1/2)-cos(k.k2/2-q.k2/2));
 }
 
 cplx lambda(const ind &p, const ind &k, const ind &q)
