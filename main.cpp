@@ -6,6 +6,7 @@
 #include "parameters.h"
 #include "omp.h"
 #include <fstream>
+#include <vector>
 #include "mpi.h"
 
 typedef std::complex<double> cplx;
@@ -181,8 +182,18 @@ int main(int argc, char **argv)
     if (procID == 0)
         std::cout << mu << ' ' << n() << std::endl;
 
-    int fr = (L / 2 + 1) * procID / procNum;
-    int to = (L / 2 + 1) * (procID + 1) / procNum;
+    std::vector<std::pair<int,int> > plist;
+    for (int i = 0; i <= L / 2; i++)
+    {
+        for (int j = 0; j <= i; j++)
+        {
+            plist.push_back(std::make_pair(i,j));
+        }
+    }
+
+    int fr = plist.size() * procID / procNum;
+    int to = plist.size() * (procID + 1) / procNum;
+
     for (int i = 0; i <= L / 2; i++)
     {
         for (int j = 0; j <= L / 2; j++)
@@ -194,20 +205,19 @@ int main(int argc, char **argv)
         }
     }
 
-    for (int i = fr; i < to; i++)
+    for (int ind = fr; ind < to; ind++)
     {
-        for (int j = 0; j <= i; j++)
-        {
-            cplx tmp = chi_mat(i * 2 * M_PI / L, j * 2 * M_PI / L);
-            cplx tmptmp = chi0_mat(i * 2 * M_PI / L, j * 2 * M_PI / L);
-            //std::cout << i << ' ' << j << ' ' << tmp << ' ' << tmptmp << ' ' << tmptmp - tmp << std::endl;
+        int i=plist[ind].first;
+        int j=plist[ind].second;
 
-            mat[i][j] = tmp;
-            mat[j][i] = tmp;
+        cplx tmp = chi_mat(i * 2 * M_PI / L, j * 2 * M_PI / L);
+        cplx tmptmp = chi0_mat(i * 2 * M_PI / L, j * 2 * M_PI / L);
 
-            mat0[i][j] = tmptmp;
-            mat0[j][i] = tmptmp;
-        }
+        mat[i][j] = tmp;
+        mat[j][i] = tmp;
+
+        mat0[i][j] = tmptmp;
+        mat0[j][i] = tmptmp;
     }
 
     MPI_Reduce(&mat[0][0], &mat_ALL[0][0], (L / 2 + 1) * (L / 2 + 1), MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
